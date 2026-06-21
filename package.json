@@ -1,0 +1,23 @@
+{
+  "name": "smartlogix-frontend",
+  "version": "1.0.0",
+  "description": "Frontend NPM para el sistema SmartLogix",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "smartlogix",
+    "frontend",
+    "npm",
+    "vite"
+  ],
+  "author": "Equipo SmartLogix",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
