@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SmartLogix – Plataforma inteligente para la gestión logística de eCommerce. Inventario, pedidos y envíos en tiempo real para PYMEs.">
+    <meta name="keywords" content="logística, ecommerce, inventario, pedidos, envíos, pymes, microservicios">
+    <title>SmartLogix – Gestión Logística Inteligente</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════ HEADER ═══════════════════════ -->
+    <header>
+        <div class="container">
+            <div class="flex-between flex-wrap">
+                <div class="brand">
+                    <a href="#inicio" class="logo-combined">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo">SmartLogix</span>
+                    </a>
+                    <p class="texto-secundario">Plataforma Inteligente de Logística</p>
+                </div>
+
+                <nav role="navigation" aria-label="Menú principal">
+                    <ul>
+                        <li><a href="#inicio" class="activo">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#modulos">Módulos</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <div class="user-actions flex">
+                    <button id="login-btn" class="btn btn-secondary" aria-label="Iniciar sesión">
+                        Iniciar sesión
+                    </button>
+                    <button id="demo-btn" class="btn btn-primary" aria-label="Ver demo">
+                        🚀 Ver Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="login-section" class="login-section" style="display: none;">
+        <div class="container">
+            <h2>Iniciar sesión</h2>
+
+            <div class="form-group">
+                <label for="login-email">Correo electrónico</label>
+                <input type="email" id="login-email" placeholder="correo@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Contraseña</label>
+                <input type="password" id="login-password" placeholder="Contraseña">
+            </div>
+
+            <button id="login-submit-btn" class="btn btn-primary">Entrar</button>
+
+            <p id="login-message"></p>
+        </div>
+    </section>
+
+    <section id="session-section" class="session-section" style="display: none;">
+        <div class="container">
+            <h2>Panel del cliente</h2>
+            <p id="session-user-message"></p>
+
+            <div class="form-group">
+                <label for="producto-compra">Producto disponible</label>
+                <select id="producto-compra">
+                    <option value="">Cargando productos...</option>
+                </select>
+                <p id="productos-message"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad-compra">Cantidad</label>
+                <input type="number" id="cantidad-compra" value="1" min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="total-compra">Total</label>
+                <input type="number" id="total-compra" value="0" readonly>
+            </div>
+
+            <button id="comprar-btn" class="btn btn-primary">Realizar compra ficticia</button>
+            <button id="logout-btn" class="btn btn-secondary">Cerrar sesión</button>
+
+            <p id="compra-message"></p>
+        </div>
+    </section>
+
+    <section id="confirmacion-compra-section" class="session-section" style="display: none;">
+        <div class="container">
+            <h2>Compra realizada correctamente</h2>
+
+            <p id="confirmacion-mensaje"></p>
+
+            <div class="form-group">
+                <strong>Producto:</strong>
+                <p id="confirmacion-producto"></p>
+            </div>
+
+            <div class="form-group">
+                <strong>Cantidad:</strong>
+                <p id="confirmacion-cantidad"></p>
+            </div>
+
+            <div class="form-group">
+                <strong>Total:</strong>
+                <p id="confirmacion-total"></p>
+            </div>
+
+            <div class="form-group">
+                <strong>ID del pedido:</strong>
+                <p id="confirmacion-pedido-id"></p>
+            </div>
+
+            <button id="volver-panel-btn" class="btn btn-primary">Realizar otra compra</button>
+            <button id="logout-confirmacion-btn" class="btn btn-secondary">Cerrar sesión</button>
+        </div>
+    </section>
+
+    <main>
+
+        <!-- ═══════════════════ HERO ═══════════════════════ -->
+        <section id="inicio" class="hero-section fade-in">
+            <div class="container text-center">
+                <article class="hero-content">
+                    <span class="hero-badge">Plataforma basada en microservicios</span>
+                    <h1>Gestiona tu logística con inteligencia y precisión</h1>
+                    <p class="hero-subtitle">SmartLogix centraliza inventario, pedidos y envíos en una sola plataforma escalable. Diseñada para PYMEs de eCommerce que necesitan crecer sin límites.</p>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="stat-num">3</span>
+                            <span class="stat-desc">Microservicios integrados</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-num">99.9%</span>
+                            <span class="stat-desc">Disponibilidad garantizada</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-num">–40%</span>
+                            <span class="stat-desc">Reducción de costos operativos</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-buttons">
+                        <a href="#modulos" class="btn btn-primary bounce">Explorar plataforma</a>
+                        <a href="#contacto" class="btn btn-outline">Solicitar demo</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ SERVICIOS ════════════════════ -->
+        <section id="servicios" class="services-section">
+            <div class="container">
+                <h2 class="text-center mb-sm">¿Por qué SmartLogix?</h2>
+                <p class="text-center texto-secundario mb-lg">Resolvemos los problemas más comunes de las PYMEs con tecnología de punta</p>
+
+                <div class="grid grid-3">
+                    <article class="service-card">
+                        <div class="service-icon">📦</div>
+                        <h3>Inventario en tiempo real</h3>
+                        <p>Sincronización automática entre múltiples bodegas y tiendas. Nunca más desabastecimiento inesperado ni exceso de stock.</p>
+                        <ul class="feature-list">
+                            <li>Alertas de stock bajo</li>
+                            <li>Multi-bodega</li>
+                            <li>Historial de movimientos</li>
+                        </ul>
+                    </article>
+
+                    <article class="service-card featured">
+                        <span class="card-badge">Más usado</span>
+                        <div class="service-icon">🧾</div>
+                        <h3>Procesamiento de pedidos</h3>
+                        <p>Validación, aprobación y asignación automática de pedidos con trazabilidad completa desde la compra hasta la entrega.</p>
+                        <ul class="feature-list">
+                            <li>Validación automática</li>
+                            <li>Trazabilidad total</li>
+                            <li>Integración con marketplaces</li>
+                        </ul>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">🚚</div>
+                        <h3>Coordinación de envíos</h3>
+                        <p>Planificación de rutas optimizada y comunicación directa con transportistas para garantizar tiempos de entrega eficientes.</p>
+                        <ul class="feature-list">
+                            <li>Optimización de rutas</li>
+                            <li>Tracking en tiempo real</li>
+                            <li>Múltiples transportistas</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ MÓDULOS ══════════════════════ -->
+        <section id="modulos" class="modules-section">
+            <div class="container">
+                <h2 class="text-center mb-sm">Módulos de la plataforma</h2>
+                <p class="text-center texto-secundario mb-lg">Arquitectura de microservicios independientes y escalables</p>
+
+                <!-- Filtros -->
+                <nav class="filters mb-lg" role="tablist" aria-label="Filtros de módulos">
+                    <button class="filter-btn active" data-filter="todos" role="tab" aria-selected="true">Todos los módulos</button>
+                    <button class="filter-btn" data-filter="inventario" role="tab">Inventario</button>
+                    <button class="filter-btn" data-filter="pedidos" role="tab">Pedidos</button>
+                    <button class="filter-btn" data-filter="envios" role="tab">Envíos</button>
+                    <button class="filter-btn" data-filter="bff" role="tab">BFF / API</button>
+                </nav>
+
+                <!-- Grid de módulos -->
+                <div class="modules-grid grid grid-3" id="modulos-container">
+
+                    <article class="module-card" data-category="inventario">
+                        <div class="module-header inventario">
+                            <span class="module-tag">Puerto 8082</span>
+                            <span class="module-status disponible">● Activo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>ms-inventario</h3>
+                            <p>Gestión completa de stock, productos y bodegas con alertas automáticas de reposición.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">GET /inventario</span>
+                                <span class="endpoint">POST /inventario</span>
+                                <span class="endpoint">PUT /{id}/reducir</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">Repository</span>
+                                <span class="pattern">Observer</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="module-card" data-category="pedidos">
+                        <div class="module-header pedidos">
+                            <span class="module-tag">Puerto 8081</span>
+                            <span class="module-status disponible">● Activo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>ms-pedidos</h3>
+                            <p>Ciclo completo de pedidos: creación, validación, aprobación y seguimiento del estado.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">GET /pedidos</span>
+                                <span class="endpoint">POST /pedidos</span>
+                                <span class="endpoint">PUT /{id}/validar</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">Repository</span>
+                                <span class="pattern">Factory</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="module-card" data-category="bff">
+                        <div class="module-header bff">
+                            <span class="module-tag">Puerto 8080</span>
+                            <span class="module-status disponible">● Activo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>bff-web</h3>
+                            <p>Backend For Frontend que orquesta todos los microservicios en una sola interfaz unificada.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">GET /api/dashboard</span>
+                                <span class="endpoint">POST /api/pedidos</span>
+                                <span class="endpoint">GET /api/inventario</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">Facade</span>
+                                <span class="pattern">Circuit Breaker</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="module-card" data-category="envios">
+                        <div class="module-header envios">
+                            <span class="module-tag">Puerto 8083</span>
+                            <span class="module-status desarrollo">◐ En desarrollo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>ms-envios</h3>
+                            <p>Coordinación con transportistas y optimización de rutas de entrega para reducir tiempos.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">GET /envios</span>
+                                <span class="endpoint">POST /envios</span>
+                                <span class="endpoint">PUT /{id}/estado</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">Strategy</span>
+                                <span class="pattern">Observer</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="module-card" data-category="inventario pedidos">
+                        <div class="module-header gateway">
+                            <span class="module-tag">Gateway</span>
+                            <span class="module-status disponible">● Activo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>api-gateway</h3>
+                            <p>Punto de entrada único que enruta, autentica y balancea las solicitudes hacia los microservicios.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">Autenticación JWT</span>
+                                <span class="endpoint">Rate limiting</span>
+                                <span class="endpoint">Load balancing</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">Gateway</span>
+                                <span class="pattern">Proxy</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="module-card" data-category="bff">
+                        <div class="module-header frontend">
+                            <span class="module-tag">NPM</span>
+                            <span class="module-status disponible">● Activo</span>
+                        </div>
+                        <div class="module-body">
+                            <h3>smartlogix-ui</h3>
+                            <p>Dashboard React con componentes reutilizables para gestión de inventario y pedidos en tiempo real.</p>
+                            <div class="module-endpoints">
+                                <span class="endpoint">Dashboard</span>
+                                <span class="endpoint">Inventario UI</span>
+                                <span class="endpoint">Pedidos UI</span>
+                            </div>
+                            <div class="module-patterns">
+                                <span class="pattern">React</span>
+                                <span class="pattern">Axios</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ REGISTRO ═════════════════════ -->
+        <section id="registro" class="registration-section">
+            <div class="container">
+                <div class="grid grid-2">
+                    <div class="form-info">
+                        <h2>Comienza gratis hoy</h2>
+                        <p>Registra tu empresa y accede a la plataforma SmartLogix. Configuración en menos de 5 minutos, sin tarjeta de crédito.</p>
+
+                        <div class="benefits-list">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🔒</span>
+                                <div>
+                                    <h4>Seguridad garantizada</h4>
+                                    <p>Autenticación JWT y comunicación cifrada entre servicios</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">📈</span>
+                                <div>
+                                    <h4>Escalabilidad inmediata</h4>
+                                    <p>Microservicios independientes que crecen con tu negocio</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🔌</span>
+                                <div>
+                                    <h4>API REST lista para integrar</h4>
+                                    <p>Conecta tu tienda, marketplace o ERP en minutos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="register-form" class="registration-form" novalidate>
+                            <div class="form-group">
+                                <label for="empresa" class="form-label">Nombre de la empresa *</label>
+                                <input type="text" id="empresa" name="empresa" class="form-control" required
+                                    autocomplete="organization" aria-describedby="empresa-error"
+                                    placeholder="Ej: Mi Tienda SpA">
+                                <div class="form-error" id="empresa-error">Por favor ingresa el nombre de tu empresa</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombre" class="form-label">Nombre completo *</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" required
+                                    autocomplete="name" aria-describedby="nombre-error">
+                                <div class="form-error" id="nombre-error">Por favor ingresa tu nombre completo</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Correo electrónico *</label>
+                                <input type="email" id="email" name="email" class="form-control" required
+                                    autocomplete="email" aria-describedby="email-error email-help">
+                                <small id="email-help" class="form-help">Recibirás las credenciales de acceso en este correo</small>
+                                <div class="form-error" id="email-error">Por favor ingresa un correo electrónico válido</div>
+                                <div class="form-success" id="email-success">¡Correo válido!</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="plan" class="form-label">Plan *</label>
+                                <select id="plan" name="plan" class="form-control" required aria-describedby="plan-error">
+                                    <option value="">Selecciona un plan</option>
+                                    <option value="starter">Starter – hasta 500 pedidos/mes</option>
+                                    <option value="growth">Growth – hasta 5.000 pedidos/mes</option>
+                                    <option value="enterprise">Enterprise – sin límites</option>
+                                </select>
+                                <div class="form-error" id="plan-error">Por favor selecciona un plan</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-label">Contraseña *</label>
+                                <input type="password" id="password" name="password" class="form-control" required
+                                    minlength="8" autocomplete="new-password"
+                                    aria-describedby="password-error password-help">
+                                <small id="password-help" class="form-help">Mínimo 8 caracteres</small>
+                                <div class="form-error" id="password-error">La contraseña debe tener al menos 8 caracteres</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">Confirmar contraseña *</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                                    required autocomplete="new-password" aria-describedby="confirm-password-error">
+                                <div class="form-error" id="confirm-password-error">Las contraseñas no coinciden</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="terminos" name="terminos" required>
+                                    <span class="checkmark"></span>
+                                    Acepto los <a href="#" target="_blank">términos de servicio</a> y la
+                                    <a href="#" target="_blank">política de privacidad</a>
+                                </label>
+                                <div class="form-error" id="terminos-error">Debes aceptar los términos</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="submit-btn">
+                                <span class="btn-text">Crear cuenta gratis</span>
+                                <span class="btn-loading hidden">Creando cuenta...</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ NOSOTROS ═════════════════════ -->
+        <section id="nosotros" class="about-section">
+            <div class="container">
+                <div class="grid grid-2">
+                    <div class="about-text">
+                        <h2>Sobre SmartLogix</h2>
+                        <p>SmartLogix es una startup de tecnología logística fundada con la misión de democratizar las herramientas de gestión avanzada para PYMEs de eCommerce. Creemos que las pequeñas empresas merecen la misma potencia tecnológica que las grandes corporaciones.</p>
+
+                        <p>Nuestra plataforma está construida sobre una arquitectura de microservicios moderna, lo que garantiza escalabilidad, resiliencia y la capacidad de adaptarse a los picos de demanda sin interrupciones del servicio.</p>
+
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">PYMEs conectadas</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">2M+</div>
+                                <div class="stat-label">Pedidos procesados</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">99.9%</div>
+                                <div class="stat-label">Uptime garantizado</div>
+                            </div>
+                        </div>
+
+                        <h3>Nuestra arquitectura</h3>
+                        <p>Basada en microservicios con patrones Repository, Facade, Observer y Circuit Breaker, la plataforma garantiza que cada componente sea independiente, testeable y desplegable sin afectar al resto del sistema.</p>
+
+                        <h3>Nuestra misión</h3>
+                        <p>Proveer a las PYMEs de eCommerce una plataforma logística moderna, escalable y fácil de usar que les permita competir con grandes jugadores del mercado, reduciendo costos operativos y mejorando la experiencia de sus clientes.</p>
+                    </div>
+
+                    <div class="about-visual">
+                        <div class="arch-diagram">
+                            <div class="arch-layer frontend-layer">
+                                <span>Frontend React (NPM)</span>
+                            </div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-layer bff-layer">
+                                <span>BFF – bff-web :8080</span>
+                            </div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-services">
+                                <div class="arch-ms inventario-ms">ms-inventario :8082</div>
+                                <div class="arch-ms pedidos-ms">ms-pedidos :8081</div>
+                                <div class="arch-ms envios-ms">ms-envios :8083</div>
+                            </div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-layer db-layer">
+                                <span>Base de datos H2 / JPA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ BLOG ══════════════════════════ -->
+        <section id="blog" class="blog-section">
+            <div class="container">
+                <h2 class="text-center mb-sm">Recursos técnicos</h2>
+                <p class="text-center texto-secundario mb-lg">Guías, documentación y mejores prácticas para desarrolladores</p>
+
+                <div class="grid grid-3">
+                    <article class="blog-card">
+                        <div class="blog-content">
+                            <span class="blog-category">Arquitectura</span>
+                            <h3>Patrones de diseño en microservicios</h3>
+                            <p class="blog-excerpt">Repository, Facade y Observer aplicados en SmartLogix: cómo y por qué elegimos cada patrón...</p>
+                            <a href="#" class="blog-link">Leer más →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-content">
+                            <span class="blog-category">Backend</span>
+                            <h3>BFF: el patrón que simplifica tu frontend</h3>
+                            <p class="blog-excerpt">Aprende cómo el patrón Backend For Frontend desacopla la UI de la complejidad de los microservicios...</p>
+                            <a href="#" class="blog-link">Leer más →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-content">
+                            <span class="blog-category">Testing</span>
+                            <h3>Cobertura de código con JaCoCo y SonarQube</h3>
+                            <p class="blog-excerpt">Cómo configuramos pruebas unitarias para superar el 60% de cobertura exigido en producción...</p>
+                            <a href="#" class="blog-link">Leer más →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ CONTACTO ══════════════════════ -->
+        <section id="contacto" class="contact-section">
+            <div class="container">
+                <h2 class="text-center mb-lg">Contáctanos</h2>
+
+                <div class="grid grid-2">
+                    <div class="contact-info">
+                        <h3>Información de contacto</h3>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>Dirección</h4>
+                                <p>Av. Providencia 1234, Piso 8<br>Santiago, Chile</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <div>
+                                <h4>Teléfono</h4>
+                                <p><a href="tel:+56223456789">+56 2 2345 6789</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:hola@smartlogix.cl">hola@smartlogix.cl</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">🕒</span>
+                            <div>
+                                <h4>Horario de soporte</h4>
+                                <p>Lunes a Viernes: 9:00 – 19:00<br>Sábados: 10:00 – 14:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form id="contact-form" novalidate>
+                            <div class="form-group">
+                                <label for="contactNombre" class="form-label">Nombre *</label>
+                                <input type="text" id="contactNombre" name="contactNombre" class="form-control" required>
+                                <div class="form-error" id="contactNombre-error">Por favor ingresa tu nombre</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label">Email *</label>
+                                <input type="email" id="contactEmail" name="contactEmail" class="form-control" required>
+                                <div class="form-error" id="contactEmail-error">Por favor ingresa un email válido</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactAsunto" class="form-label">Asunto *</label>
+                                <select id="contactAsunto" name="contactAsunto" class="form-control" required>
+                                    <option value="">Selecciona un asunto</option>
+                                    <option value="demo">Solicitar demo</option>
+                                    <option value="integracion">Consulta de integración</option>
+                                    <option value="soporte">Soporte técnico</option>
+                                    <option value="precio">Consulta de precios</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                                <div class="form-error" id="contactAsunto-error">Por favor selecciona un asunto</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactMensaje" class="form-label">Mensaje *</label>
+                                <textarea id="contactMensaje" name="contactMensaje" class="form-control" rows="5"
+                                    required placeholder="Cuéntanos sobre tu empresa y lo que necesitas..."></textarea>
+                                <div class="form-error" id="contactMensaje-error">Por favor escribe tu mensaje</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════════ -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>⚡ SmartLogix</h3>
+                    <p>Plataforma inteligente de gestión logística para PYMEs de eCommerce.</p>
+                    <div class="social-icons mt-md">
+                        <a href="https://github.com/smartlogix" target="_blank" rel="noopener" aria-label="GitHub">
+                            <span>🐙</span>
+                        </a>
+                        <a href="https://linkedin.com/company/smartlogix" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <span>💼</span>
+                        </a>
+                        <a href="https://twitter.com/smartlogix" target="_blank" rel="noopener" aria-label="Twitter">
+                            <span>🐦</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="#modulos">Módulos</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#">Documentación API</a></li>
+                        <li><a href="#">Estado del sistema</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#blog">Blog técnico</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#">Trabaja con nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 SmartLogix. Todos los derechos reservados.</p>
+                <p class="texto-secundario">Desarrollado con Spring Boot · React · Maven · GitHub Flow</p>
+            </div>
+        </div>
+    </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
