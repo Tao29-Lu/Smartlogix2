@@ -1,0 +1,45 @@
+SmartLogix - Repositorios GitHub
+
+Repositorio principal:
+https://github.com/Tao29-Lu/Smartlogix2
+
+Descripción:
+Contiene el proyecto SmartLogix, incluyendo frontend NPM, Backend For Frontend, microservicios backend, documentación general y archivos de configuración.
+
+Frontend:
+Ubicación dentro del repositorio: /SmartLogix-main
+Descripción:
+Componente frontend desarrollado con HTML, CSS, JavaScript, NPM y Vite. Permite la interacción del usuario con la plataforma SmartLogix, el inicio de sesión, la visualización de productos, la validación de stock y la creación de pedidos.
+
+BFF Service:
+Ubicación dentro del repositorio: /SmartLogix-main/backend/bff-service
+Descripción:
+Backend For Frontend encargado de centralizar las solicitudes del frontend y comunicarse con los microservicios internos mediante API REST.
+
+Microservicio de Inventario:
+Ubicación dentro del repositorio: /SmartLogix-main/backend/inventario-service
+Descripción:
+Gestiona productos, stock, descripción y precios. Utiliza Spring Boot, Maven, JPA/Hibernate y MySQL.
+
+Microservicio de Pedidos:
+Ubicación dentro del repositorio: /SmartLogix-main/backend/pedidos-service
+Descripción:
+Gestiona pedidos realizados por los clientes, incluyendo producto, cantidad, total, estado y datos asociados al cliente. Utiliza Spring Boot, Maven, JPA/Hibernate y MySQL.
+
+Microservicio de Envíos:
+Ubicación dentro del repositorio: /SmartLogix-main/backend/envio-service
+Descripción:
+Gestiona información relacionada con envíos, estados de despacho, transportista y datos asociados al pedido. Utiliza Spring Boot, Maven, JPA/Hibernate y MySQL.
+
+Microservicio de Clientes:
+Ubicación dentro del repositorio: /SmartLogix-main/backend/cliente-service
+Descripción:
+Gestiona clientes e inicio de sesión. Utiliza Spring Boot, Maven, JPA/Hibernate y MySQL.
+
+Documentación:
+Ubicación dentro del repositorio: /SmartLogix-main/documentacion
+Descripción:
+Contiene el diagrama de arquitectura, descripción de persistencia, informe de pruebas unitarias y enlaces a repositorios.
+
+Estado:
+Todos los componentes se encuentran versionados en GitHub y actualizados en la rama main.

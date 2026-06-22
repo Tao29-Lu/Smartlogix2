@@ -1,13 +1,14 @@
 package com.smartlogix.bff.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class BffService {
 
-    private final WebClient webClient = WebClient.builder().build();
+    private final RestTemplate restTemplate;
 
     @Value("${smartlogix.envio.url}")
     private String envioUrl;
@@ -21,65 +22,72 @@ public class BffService {
     @Value("${smartlogix.cliente.url}")
     private String clienteUrl;
 
+    public BffService() {
+        this.restTemplate = new RestTemplate();
+    }
+
+    BffService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
     public String obtenerEnvios() {
-        return webClient.get()
-                .uri(envioUrl + "/envios")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        return restTemplate.getForObject(envioUrl + "/envios", String.class);
     }
 
     public String obtenerProductos() {
-        return webClient.get()
-                .uri(inventarioUrl + "/productos")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        return restTemplate.getForObject(inventarioUrl + "/productos", String.class);
     }
 
     public String obtenerPedidos() {
-        return webClient.get()
-                .uri(pedidosUrl + "/pedidos")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        return restTemplate.getForObject(pedidosUrl + "/pedidos", String.class);
     }
 
     public String obtenerClientes() {
-        return webClient.get()
-                .uri(clienteUrl + "/clientes")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        return restTemplate.getForObject(clienteUrl + "/clientes", String.class);
     }
 
     public String crearPedido(String pedidoJson) {
-        return webClient.post()
-                .uri(pedidosUrl + "/pedidos")
-                .header("Content-Type", "application/json")
-                .bodyValue(pedidoJson)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(pedidoJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                pedidosUrl + "/pedidos",
+                request,
+                String.class
+        );
+
+        return response.getBody();
     }
 
     public String crearEnvio(String envioJson) {
-        return webClient.post()
-                .uri(envioUrl + "/envios")
-                .header("Content-Type", "application/json")
-                .bodyValue(envioJson)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(envioJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                envioUrl + "/envios",
+                request,
+                String.class
+        );
+
+        return response.getBody();
     }
 
     public String loginCliente(String loginJson) {
-    return webClient.post()
-            .uri(clienteUrl + "/clientes/login")
-            .header("Content-Type", "application/json")
-            .bodyValue(loginJson)
-            .retrieve()
-            .bodyToMono(String.class)
-            .block();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(loginJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                clienteUrl + "/clientes/login",
+                request,
+                String.class
+        );
+
+        return response.getBody();
     }
 }
