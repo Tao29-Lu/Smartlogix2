@@ -1,0 +1,442 @@
+{
+  "info": {
+    "name": "SmartLogix API REST - BFF",
+    "description": "Colección Postman para probar la API REST centralizada mediante el Backend For Frontend del proyecto SmartLogix.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "BFF - Productos",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/productos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "productos"
+              ]
+            },
+            "description": "Obtiene el listado de productos disponibles desde inventario-service mediante el BFF."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/productos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "productos"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[{\"id\":1,\"nombre\":\"Teclado Mecánico\",\"descripcion\":\"Teclado RGB para gaming\",\"stock\":20,\"precio\":39990.0}]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BFF - Clientes",
+      "item": [
+        {
+          "name": "Listar clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/clientes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": "Obtiene el listado de clientes desde cliente-service mediante el BFF."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/clientes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "clientes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[{\"id\":1,\"nombre\":\"Cliente Demo\",\"email\":\"demo@smartlogix.cl\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Login cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@smartlogix.cl\",\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/clientes/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clientes",
+                "login"
+              ]
+            },
+            "description": "Permite validar el inicio de sesión de un cliente mediante el BFF."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"demo@smartlogix.cl\",\n  \"password\": \"1234\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/clientes/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "clientes",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"autenticado\":true,\"clienteId\":1,\"nombre\":\"Cliente Demo\",\"tokenDemo\":\"TOKEN_DEMO\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BFF - Pedidos",
+      "item": [
+        {
+          "name": "Listar pedidos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/pedidos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            },
+            "description": "Obtiene el listado de pedidos desde pedidos-service mediante el BFF."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/pedidos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "pedidos"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[{\"id\":1,\"cliente\":\"Cliente Demo\",\"producto\":\"Teclado Mecánico\",\"cantidad\":1,\"total\":39990.0,\"estado\":\"PENDIENTE\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Crear pedido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"clienteEmail\": \"demo@smartlogix.cl\",\n  \"cliente\": \"Cliente Demo\",\n  \"producto\": \"Teclado Mecánico\",\n  \"cantidad\": 1,\n  \"total\": 39990.0,\n  \"estado\": \"PENDIENTE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/pedidos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            },
+            "description": "Crea un nuevo pedido mediante el BFF y lo redirige hacia pedidos-service."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clienteId\": 1,\n  \"clienteEmail\": \"demo@smartlogix.cl\",\n  \"cliente\": \"Cliente Demo\",\n  \"producto\": \"Teclado Mecánico\",\n  \"cantidad\": 1,\n  \"total\": 39990.0,\n  \"estado\": \"PENDIENTE\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/pedidos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "pedidos"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"id\":1,\"cliente\":\"Cliente Demo\",\"producto\":\"Teclado Mecánico\",\"cantidad\":1,\"total\":39990.0,\"estado\":\"PENDIENTE\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BFF - Envíos",
+      "item": [
+        {
+          "name": "Listar envíos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/envios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "envios"
+              ]
+            },
+            "description": "Obtiene el listado de envíos desde envio-service mediante el BFF."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/envios",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "envios"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[{\"id\":1,\"pedidoId\":1,\"direccion\":\"Santiago\",\"estado\":\"EN_PREPARACION\",\"transportista\":\"Chilexpress\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Crear envío",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pedidoId\": 1,\n  \"direccion\": \"Santiago Centro\",\n  \"estado\": \"EN_PREPARACION\",\n  \"transportista\": \"Chilexpress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/envios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "envios"
+              ]
+            },
+            "description": "Crea un nuevo envío mediante el BFF y lo redirige hacia envio-service."
+          },
+          "response": [
+            {
+              "name": "Respuesta ejemplo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pedidoId\": 1,\n  \"direccion\": \"Santiago Centro\",\n  \"estado\": \"EN_PREPARACION\",\n  \"transportista\": \"Chilexpress\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/envios",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "envios"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"id\":1,\"pedidoId\":1,\"direccion\":\"Santiago Centro\",\"estado\":\"EN_PREPARACION\",\"transportista\":\"Chilexpress\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
