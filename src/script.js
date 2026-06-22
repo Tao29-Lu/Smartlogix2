@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("SmartLogix frontend cargado correctamente");
 
-    const API_CLIENTES = "http://localhost:8084/clientes";
-    const API_PEDIDOS = "http://localhost:8083/pedidos";
-    const API_PRODUCTOS = "http://localhost:8082/productos";
+    const API_BASE_URL = "http://localhost:8080/api";
+
+    const API_CLIENTES = `${API_BASE_URL}/clientes`;
+    const API_PEDIDOS = `${API_BASE_URL}/pedidos`;
+    const API_PRODUCTOS = `${API_BASE_URL}/productos`;
 
     const loginBtn = document.getElementById("login-btn");
     const loginSection = document.getElementById("login-section");
@@ -34,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const volverPanelBtn = document.getElementById("volver-panel-btn");
 
     console.log("Script principal cargado correctamente");
+    console.log("API centralizada mediante BFF:", API_BASE_URL);
 
     function ocultarSeccionesCliente() {
         if (loginSection) {
@@ -109,11 +112,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const respuesta = await fetch(API_PRODUCTOS);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudo obtener productos desde el BFF");
+            }
+
             const productos = await respuesta.json();
 
             productoCompra.innerHTML = "";
 
-            if (!respuesta.ok || productos.length === 0) {
+            if (!productos || productos.length === 0) {
                 productoCompra.innerHTML = `<option value="">No hay productos disponibles</option>`;
 
                 if (productosMessage) {
@@ -138,17 +146,17 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (productosMessage) {
-                productosMessage.textContent = "Productos cargados correctamente.";
+                productosMessage.textContent = "Productos cargados correctamente desde el BFF.";
             }
 
             actualizarTotalCompra();
         } catch (error) {
-            console.error("Error al cargar productos:", error);
+            console.error("Error al cargar productos desde el BFF:", error);
 
             productoCompra.innerHTML = `<option value="">Error al cargar productos</option>`;
 
             if (productosMessage) {
-                productosMessage.textContent = "Error al conectar con inventario-service.";
+                productosMessage.textContent = "Error al conectar con el BFF de inventario.";
             }
 
             actualizarTotalCompra();
@@ -258,10 +266,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             } catch (error) {
-                console.error("Error al iniciar sesión:", error);
+                console.error("Error al iniciar sesión desde el BFF:", error);
 
                 if (loginMessage) {
-                    loginMessage.textContent = "Error al conectar con cliente-service.";
+                    loginMessage.textContent = "Error al conectar con el BFF de clientes.";
                 }
             }
         });
@@ -350,19 +358,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         compraMessage.textContent = "";
                     }
 
-                    console.log("Pedido creado:", pedido);
+                    console.log("Pedido creado desde el BFF:", pedido);
                 } else {
                     if (compraMessage) {
                         compraMessage.textContent = "No se pudo crear el pedido.";
                     }
 
-                    console.error("Error al crear pedido:", pedido);
+                    console.error("Error al crear pedido desde el BFF:", pedido);
                 }
             } catch (error) {
-                console.error("Error al conectar con pedidos-service:", error);
+                console.error("Error al conectar con el BFF de pedidos:", error);
 
                 if (compraMessage) {
-                    compraMessage.textContent = "Error al conectar con pedidos-service.";
+                    compraMessage.textContent = "Error al conectar con el BFF de pedidos.";
                 }
             }
         });
