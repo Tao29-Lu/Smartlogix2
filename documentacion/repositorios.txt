@@ -43,3 +43,8 @@ Contiene el diagrama de arquitectura, descripción de persistencia, informe de p
 
 Estado:
 Todos los componentes se encuentran versionados en GitHub y actualizados en la rama main.
+
+Postman Collection:
+Ubicación dentro del repositorio: /SmartLogix-main/documentacion/postman/SmartLogix.postman_collection.json
+Descripción:
+Colección de Postman que documenta los endpoints REST expuestos por el BFF. Incluye ejemplos de peticiones y respuestas para productos, clientes, login, pedidos y envíos.
