@@ -7,6 +7,9 @@
     <meta name="description" content="SmartLogix – Plataforma inteligente para la gestión logística de eCommerce. Inventario, pedidos y envíos en tiempo real para PYMEs.">
     <meta name="keywords" content="logística, ecommerce, inventario, pedidos, envíos, pymes, microservicios">
     <title>SmartLogix – Gestión Logística Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
 </head>
 
@@ -28,7 +31,6 @@
                     <ul>
                         <li><a href="#inicio" class="activo">Inicio</a></li>
                         <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#modulos">Módulos</a></li>
                         <li><a href="#nosotros">Nosotros</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
@@ -204,146 +206,6 @@
             </div>
         </section>
 
-        <!-- ═══════════════════ MÓDULOS ══════════════════════ -->
-        <section id="modulos" class="modules-section">
-            <div class="container">
-                <h2 class="text-center mb-sm">Módulos de la plataforma</h2>
-                <p class="text-center texto-secundario mb-lg">Arquitectura de microservicios independientes y escalables</p>
-
-                <!-- Filtros -->
-                <nav class="filters mb-lg" role="tablist" aria-label="Filtros de módulos">
-                    <button class="filter-btn active" data-filter="todos" role="tab" aria-selected="true">Todos los módulos</button>
-                    <button class="filter-btn" data-filter="inventario" role="tab">Inventario</button>
-                    <button class="filter-btn" data-filter="pedidos" role="tab">Pedidos</button>
-                    <button class="filter-btn" data-filter="envios" role="tab">Envíos</button>
-                    <button class="filter-btn" data-filter="bff" role="tab">BFF / API</button>
-                </nav>
-
-                <!-- Grid de módulos -->
-                <div class="modules-grid grid grid-3" id="modulos-container">
-
-                    <article class="module-card" data-category="inventario">
-                        <div class="module-header inventario">
-                            <span class="module-tag">Puerto 8082</span>
-                            <span class="module-status disponible">● Activo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>ms-inventario</h3>
-                            <p>Gestión completa de stock, productos y bodegas con alertas automáticas de reposición.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">GET /inventario</span>
-                                <span class="endpoint">POST /inventario</span>
-                                <span class="endpoint">PUT /{id}/reducir</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">Repository</span>
-                                <span class="pattern">Observer</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="module-card" data-category="pedidos">
-                        <div class="module-header pedidos">
-                            <span class="module-tag">Puerto 8081</span>
-                            <span class="module-status disponible">● Activo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>ms-pedidos</h3>
-                            <p>Ciclo completo de pedidos: creación, validación, aprobación y seguimiento del estado.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">GET /pedidos</span>
-                                <span class="endpoint">POST /pedidos</span>
-                                <span class="endpoint">PUT /{id}/validar</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">Repository</span>
-                                <span class="pattern">Factory</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="module-card" data-category="bff">
-                        <div class="module-header bff">
-                            <span class="module-tag">Puerto 8080</span>
-                            <span class="module-status disponible">● Activo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>bff-web</h3>
-                            <p>Backend For Frontend que orquesta todos los microservicios en una sola interfaz unificada.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">GET /api/dashboard</span>
-                                <span class="endpoint">POST /api/pedidos</span>
-                                <span class="endpoint">GET /api/inventario</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">Facade</span>
-                                <span class="pattern">Circuit Breaker</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="module-card" data-category="envios">
-                        <div class="module-header envios">
-                            <span class="module-tag">Puerto 8083</span>
-                            <span class="module-status desarrollo">◐ En desarrollo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>ms-envios</h3>
-                            <p>Coordinación con transportistas y optimización de rutas de entrega para reducir tiempos.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">GET /envios</span>
-                                <span class="endpoint">POST /envios</span>
-                                <span class="endpoint">PUT /{id}/estado</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">Strategy</span>
-                                <span class="pattern">Observer</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="module-card" data-category="inventario pedidos">
-                        <div class="module-header gateway">
-                            <span class="module-tag">Gateway</span>
-                            <span class="module-status disponible">● Activo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>api-gateway</h3>
-                            <p>Punto de entrada único que enruta, autentica y balancea las solicitudes hacia los microservicios.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">Autenticación JWT</span>
-                                <span class="endpoint">Rate limiting</span>
-                                <span class="endpoint">Load balancing</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">Gateway</span>
-                                <span class="pattern">Proxy</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="module-card" data-category="bff">
-                        <div class="module-header frontend">
-                            <span class="module-tag">NPM</span>
-                            <span class="module-status disponible">● Activo</span>
-                        </div>
-                        <div class="module-body">
-                            <h3>smartlogix-ui</h3>
-                            <p>Dashboard React con componentes reutilizables para gestión de inventario y pedidos en tiempo real.</p>
-                            <div class="module-endpoints">
-                                <span class="endpoint">Dashboard</span>
-                                <span class="endpoint">Inventario UI</span>
-                                <span class="endpoint">Pedidos UI</span>
-                            </div>
-                            <div class="module-patterns">
-                                <span class="pattern">React</span>
-                                <span class="pattern">Axios</span>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
 
         <!-- ═══════════════════ REGISTRO ═════════════════════ -->
         <section id="registro" class="registration-section">
