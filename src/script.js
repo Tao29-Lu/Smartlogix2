@@ -281,8 +281,10 @@ document.addEventListener("DOMContentLoaded", function () {
         registerForm.addEventListener("submit", async function (evento) {
             evento.preventDefault();
 
+            const empresa = document.getElementById("empresa").value.trim();
             const nombre = document.getElementById("nombre").value.trim();
             const email = document.getElementById("email").value.trim();
+            const plan = document.getElementById("plan").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirmPassword").value;
             const terminos = document.getElementById("terminos").checked;
@@ -300,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const respuesta = await fetch(`${API_CLIENTES}/registro`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre, email, password })
+                    body: JSON.stringify({ empresa, nombre, email, plan, password })
                 });
 
                 const data = await respuesta.json();
