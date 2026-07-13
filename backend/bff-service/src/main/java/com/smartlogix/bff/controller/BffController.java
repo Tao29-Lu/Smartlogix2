@@ -49,4 +49,9 @@ public class BffController {
     public String loginCliente(@RequestBody String loginJson) {
         return bffService.loginCliente(loginJson);
     }
+    @PostMapping(value = "/clientes/registro", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String registrarCliente(@RequestBody String clienteJson) {
+       return bffService.registrarCliente(clienteJson);
+    }
+    
 }

@@ -275,6 +275,49 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    const registerForm = document.getElementById("register-form");
+
+    if (registerForm) {
+        registerForm.addEventListener("submit", async function (evento) {
+            evento.preventDefault();
+
+            const nombre = document.getElementById("nombre").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const terminos = document.getElementById("terminos").checked;
+
+            if (password !== confirmPassword) {
+                alert("Las contraseñas no coinciden");
+                return;
+            }
+            if (!terminos) {
+                alert("Debes aceptar los términos");
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(`${API_CLIENTES}/registro`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre, email, password })
+                });
+
+                const data = await respuesta.json();
+
+                if (respuesta.ok) {
+                    alert("Cuenta creada correctamente");
+                    registerForm.reset();
+                } else {
+                    alert(data || "No se pudo crear la cuenta");
+                }
+            } catch (error) {
+                console.error("Error al registrar cliente:", error);
+                alert("Error al conectar con el servidor");
+            }
+        });
+    }
+
     if (comprarBtn) {
         comprarBtn.addEventListener("click", async function () {
             const clienteId = localStorage.getItem("clienteId");
