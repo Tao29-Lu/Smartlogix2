@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("SmartLogix frontend cargado correctamente");
 
+    // Utilidades UI
+    function obtenerBotonSubmit(form) {
+        if (!form) return null;
+        // Preferimos el botón submit del propio form.
+        const btn = form.querySelector("button[type='submit'], input[type='submit']");
+        return btn || null;
+    }
+
+
     const API_BASE_URL = "http://localhost:8080/api";
 
     const API_CLIENTES = `${API_BASE_URL}/clientes`;
@@ -34,6 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmacionTotal = document.getElementById("confirmacion-total");
     const confirmacionPedidoId = document.getElementById("confirmacion-pedido-id");
     const volverPanelBtn = document.getElementById("volver-panel-btn");
+
+    // Formularios (Registro / Contacto)
+    const registerForm = document.getElementById("register-form");
+    const contactForm = document.getElementById("contact-form");
+
 
     console.log("Script principal cargado correctamente");
     console.log("API centralizada mediante BFF:", API_BASE_URL);
@@ -105,8 +119,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    const MOCK_PRODUCTOS = [
+        { id: 101, nombre: "Cámara térmica Pro", precio: 129.99, stock: 18 },
+        { id: 102, nombre: "Escáner Bluetooth Industrial", precio: 59.5, stock: 42 },
+        { id: 103, nombre: "Impresora de etiquetas SmartPrint", precio: 89.0, stock: 25 }
+    ];
+
+    let modoDemoActivo = false;
+
+    function cargarProductosMock() {
+        if (!productoCompra) return;
+
+        productoCompra.innerHTML = "";
+
+        MOCK_PRODUCTOS.forEach((producto) => {
+            const option = document.createElement("option");
+            option.value = producto.id;
+            option.dataset.nombre = producto.nombre;
+            option.dataset.precio = producto.precio;
+            option.dataset.stock = producto.stock;
+            option.textContent = `${producto.nombre} - Stock: ${producto.stock} - $${producto.precio}`;
+            productoCompra.appendChild(option);
+        });
+
+        // Selecciona el primero por defecto y recalcula total.
+        if (MOCK_PRODUCTOS.length > 0) {
+            productoCompra.value = String(MOCK_PRODUCTOS[0].id);
+        }
+
+        actualizarTotalCompra();
+    }
+
     async function cargarProductosDisponibles() {
         if (!productoCompra) {
+            return;
+        }
+
+        if (modoDemoActivo) {
+            cargarProductosMock();
             return;
         }
 
@@ -153,13 +203,12 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar productos desde el BFF:", error);
 
-            productoCompra.innerHTML = `<option value="">Error al cargar productos</option>`;
+            // Fallback: si la BD/BFF está apagado, mostrar demo visual.
+            cargarProductosMock();
 
             if (productosMessage) {
-                productosMessage.textContent = "Error al conectar con el BFF de inventario.";
+                productosMessage.textContent = "Modo demo: productos cargados con datos de prueba.";
             }
-
-            actualizarTotalCompra();
         }
     }
 
@@ -198,6 +247,77 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // =============================
+    // DEMO (mock data, sin backend)
+    // =============================
+    const demoBtn = document.getElementById("demo-btn");
+
+    function mostrarPanelDemo() {
+        modoDemoActivo = true;
+
+        ocultarSeccionesCliente();
+
+        if (sessionSection) {
+            sessionSection.style.display = "block";
+            sessionSection.scrollIntoView({ behavior: "smooth" });
+        }
+
+        if (confirmacionCompraSection) {
+            confirmacionCompraSection.style.display = "none";
+        }
+
+        if (sessionUserMessage) {
+            sessionUserMessage.textContent = "Sesión demo (datos de prueba).";
+        }
+
+        if (loginBtn) {
+            loginBtn.textContent = "Iniciar sesión";
+            loginBtn.disabled = false;
+        }
+
+        if (loginMessage) {
+            loginMessage.textContent = "";
+        }
+
+        if (compraMessage) {
+            compraMessage.textContent = "";
+        }
+
+        cargarProductosMock();
+    }
+
+    if (demoBtn) {
+        demoBtn.addEventListener("click", function () {
+            mostrarPanelDemo();
+        });
+    }
+
+    // Botones/links tipo ancla con smooth scroll
+    function manejarScrollSuave(anchorSelector, fallbackAlert) {
+        const anchors = document.querySelectorAll(anchorSelector);
+        anchors.forEach((a) => {
+            a.addEventListener("click", function (e) {
+                const href = a.getAttribute("href");
+                if (!href || !href.startsWith("#")) return;
+
+                const targetId = href.slice(1);
+                const target = document.getElementById(targetId);
+
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: "smooth" });
+                } else {
+                    if (fallbackAlert) alert(fallbackAlert);
+                }
+            });
+        });
+    }
+
+    manejarScrollSuave('a[href="#modulos"]', 'Próximamente');
+    manejarScrollSuave('a[href="#contacto"]', 'Próximamente');
+
+
+
     if (productoCompra) {
         productoCompra.addEventListener("change", actualizarTotalCompra);
     }
@@ -207,7 +327,133 @@ document.addEventListener("DOMContentLoaded", function () {
         cantidadCompra.addEventListener("change", actualizarTotalCompra);
     }
 
+    // =============================
+    // Registro REAL (POST JSON + mensajes)
+    // =============================
+    if (registerForm) {
+        registerForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            // Captura inputs específicos del HTML
+            const nombreEl = document.getElementById("nombre");
+            const emailEl = document.getElementById("email");
+            const passwordEl = document.getElementById("password");
+
+            const nombre = nombreEl ? nombreEl.value.trim() : "";
+            const email = emailEl ? emailEl.value.trim() : "";
+            const password = passwordEl ? passwordEl.value.trim() : "";
+
+            const btnSubmit = obtenerBotonSubmit(registerForm);
+            const btnText = btnSubmit ? btnSubmit.querySelector(".btn-text") : null;
+            const btnLoading = btnSubmit ? btnSubmit.querySelector(".btn-loading") : null;
+
+            const textoOriginal = btnText ? btnText.textContent : "Crear cuenta gratis";
+
+            const setMensaje = (msg) => {
+                console.log(msg);
+            };
+
+            if (!nombre || !email || !password) {
+                setMensaje("Error al registrar: completa nombre, correo y contraseña.");
+                return;
+            }
+
+            try {
+                // UI loading
+                if (btnText) btnText.textContent = "Cargando...";
+                if (btnLoading) btnLoading.classList.remove("hidden");
+                if (btnSubmit) btnSubmit.disabled = true;
+
+                const payload = { nombre, email, password };
+
+                const API_REGISTER = "http://localhost:8080/api/clientes";
+
+                const respuesta = await fetch(API_REGISTER, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!respuesta.ok) {
+                    let detalle = "";
+                    try {
+                        detalle = await respuesta.text();
+                    } catch (_) {}
+                    throw new Error(detalle || `HTTP ${respuesta.status}`);
+                }
+
+                setMensaje("Registro exitoso");
+                if (btnText) btnText.textContent = "Registro exitoso";
+            } catch (error) {
+                console.error("Error al registrar:", error);
+                setMensaje(`Error al registrar: ${error?.message || "desconocido"}`);
+                if (btnText) btnText.textContent = textoOriginal;
+            } finally {
+                if (btnSubmit) btnSubmit.disabled = false;
+                if (btnLoading) btnLoading.classList.add("hidden");
+            }
+        });
+    }
+
+    // =============================
+    // Contacto (preventDefault + loading + error)
+    // =============================
+    if (contactForm) {
+        contactForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const btnSubmit = obtenerBotonSubmit(contactForm);
+            const btnLoading = btnSubmit ? btnSubmit.querySelector(".btn-loading") : null;
+            const btnText = btnSubmit ? btnSubmit.querySelector(".btn-text") : null;
+
+            // Texto original (fallback)
+            const textoOriginal = btnText ? btnText.textContent : "Enviar mensaje";
+
+
+            try {
+                if (btnText) btnText.textContent = "Cargando...";
+                if (btnLoading) btnLoading.classList.remove("hidden");
+                if (btnSubmit) btnSubmit.disabled = true;
+
+                const formData = new FormData(contactForm);
+                const payload = Object.fromEntries(formData.entries());
+
+                const API_CONTACT_PLACEHOLDER = `${API_BASE_URL}/contacto/enviar`;
+
+                const respuesta = await fetch(API_CONTACT_PLACEHOLDER, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!respuesta.ok) {
+                    throw new Error("Error enviando el mensaje de contacto");
+                }
+
+                console.log("Contacto enviado (placeholder).", await respuesta.json().catch(() => ({})));
+
+                if (btnText) btnText.textContent = "Enviado";
+
+            } catch (error) {
+                console.error("Error en contacto:", error);
+
+                if (btnText) btnText.textContent = textoOriginal;
+                if (btnLoading) btnLoading.classList.add("hidden");
+
+                console.log("No se pudo enviar tu mensaje. Intenta nuevamente más tarde.");
+            } finally {
+                if (btnSubmit) btnSubmit.disabled = false;
+                if (btnLoading) btnLoading.classList.add("hidden");
+            }
+        });
+    }
+
     if (loginSubmitBtn) {
+
         loginSubmitBtn.addEventListener("click", async function () {
             const email = loginEmail ? loginEmail.value.trim() : "";
             const password = loginPassword ? loginPassword.value.trim() : "";

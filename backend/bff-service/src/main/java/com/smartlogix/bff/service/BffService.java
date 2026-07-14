@@ -90,4 +90,20 @@ public class BffService {
 
         return response.getBody();
     }
+
+    // 👇 AQUÍ ESTÁ EL NUEVO CÓDIGO QUE AGREGAMOS 👇
+    public String registrarCliente(String registroJson) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(registroJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                clienteUrl + "/clientes",
+                request,
+                String.class
+        );
+
+        return response.getBody();
+    }
 }
